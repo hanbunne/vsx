@@ -6,18 +6,18 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 public class GameScreen extends ScreenAdapter {
 	private VersusX versusx;
 	private Texture playerImg;
-	private int x;
-	private int y;
+	
+	private Player1 player1;
 	
 	public GameScreen(VersusX versusx){
 		this.versusx = versusx;
 		playerImg = new Texture("player.png");
-		x = 100;
-		y = 100;
+		player1 = new Player1(100,100);
 	}
 	
 	@Override
@@ -27,22 +27,23 @@ public class GameScreen extends ScreenAdapter {
         update(delta);
         SpriteBatch batch = versusx.batch;
         batch.begin();
-        batch.draw(playerImg, x, y);
+        Vector2 pos = player1.getPosition();
+        batch.draw(playerImg, pos.x, pos.y);
         batch.end();
     }
 	
 	private void update(float delta) {
         if(Gdx.input.isKeyPressed(Keys.A)) {
-            x -= 10;
+        	player1.move(Player1.DIRECTION_LEFT);
         }
         if(Gdx.input.isKeyPressed(Keys.D)) {
-            x += 10;
+        	player1.move(Player1.DIRECTION_RIGHT);
         }
         if(Gdx.input.isKeyPressed(Keys.W)) {
-            y += 10;
+        	player1.move(Player1.DIRECTION_UP);
         }
         if(Gdx.input.isKeyPressed(Keys.S)) {
-            y -= 10;
+        	player1.move(Player1.DIRECTION_DOWN);
         }
     }
 	
